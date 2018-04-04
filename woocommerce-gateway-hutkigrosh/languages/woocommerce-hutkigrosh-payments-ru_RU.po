@@ -1,0 +1,220 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Hutkigrosh Gateway Payments\n"
+"POT-Creation-Date: 2018-01-10 17:34+0300\n"
+"PO-Revision-Date: 2018-03-05 11:49+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: hutkigrosh_hooks.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: hg.php:47
+msgid "plugin_title"
+msgstr "ХуткiГрош"
+
+#: hg.php:49
+msgid "plugin_description"
+msgstr ""
+"Плагин обеспечивает выставление счетов в систему ЕРИП через платежный шлюз "
+"hutkigrosh.by"
+
+#: hg.php:113
+msgid "order_status_failed"
+msgstr "Ошибка оплаты"
+
+#: hg.php:115 hg.php:335
+msgid "order_status_pending"
+msgstr "Ожидание оплаты"
+
+#: hg.php:187
+msgid "enable_disable_payments_gateway"
+msgstr "Включить/Выключить"
+
+#: hg.php:188
+msgid "enable_disable_payments_gateway_label"
+msgstr "Включить прием платежей через ХуткiГрош"
+
+#: hg.php:194
+msgid "hutkigrosh_storeid_title"
+msgstr "Уникальный идентификатор услуги ЕРИП"
+
+#: hg.php:196
+msgid "hutkigrosh_storeid_desk"
+msgstr "ЕРИП ID, присвоенный магазину"
+
+#: hg.php:201
+msgid "hutkigrosh_store_name_title"
+msgstr "Название магазина"
+
+#: hg.php:203
+msgid "hutkigrosh_store_name_desk"
+msgstr "Название магазина будет отображаться в выставленных счетах"
+
+#: hg.php:208
+msgid "hutkigrosh_login_title"
+msgstr "Логин интернет-магазина"
+
+#: hg.php:210
+msgid "hutkigrosh_login_desk"
+msgstr "Логин в системе ХуткiГрош"
+
+#: hg.php:215
+msgid "hutkigrosh_pswd_title"
+msgstr "Пароль интернет-магазина"
+
+#: hg.php:217
+msgid "hutkigrosh_pswd_desk"
+msgstr "Пароль в системе ХуткiГрош"
+
+#: hg.php:222
+msgid "hutkigrosh_payment_method_name_title"
+msgstr "Название способа оплаты"
+
+#: hg.php:224
+msgid "hutkigrosh_payment_method_name_desk"
+msgstr "Название способа оплаты, которые увидит клиент при оформление заказа"
+
+#: hg.php:225
+msgid "hutkigrosh_payment_method_name_default"
+msgstr "Оплата в ЕРИП через «Хуткi Грош»"
+
+#: hg.php:229
+msgid "hutkigrosh_payment_method_description_title"
+msgstr "Описание способа оплаты для покупателя"
+
+#: hg.php:231
+msgid "hutkigrosh_payment_method_description_desk"
+msgstr ""
+"Описание для способа оплаты, которое отобразится клиенту при оформлении "
+"заказа"
+
+#: hg.php:232
+msgid "hutkigrosh_payment_method_description_default"
+msgstr ""
+"«Хуткi Грош»™ — платежный сервис по выставлению счетов в АИС \"Расчет"
+"\" (ЕРИП).\n"
+"После выставления счета Вам будет доступна его оплата пластиковой карточкой "
+"и электронными деньгами, в любом из отделений банков, кассах, банкоматах, "
+"платежных терминалах, в системе электронных денег, через Интернет-банкинг, М-"
+"банкинг, интернет-эквайринг"
+
+#: hg.php:237
+msgid "hutkigrosh_checkout_success_text_title"
+msgstr "Текст успешного оформления заказа"
+
+#: hg.php:239
+msgid "hutkigrosh_checkout_success_text_desk"
+msgstr ""
+"Текст отобразиться клиенту после успешного оформления заказа и выставления "
+"счета в ХуткиГрош"
+
+#: hg.php:240
+msgid "hutkigrosh_checkout_success_text_default"
+msgstr ""
+"Спасибо за Ваш заказ.\n"
+"Счет №{{order_id}} успешно выставлен в ЕРИП\n"
+"Вы можете оплатить его наличными деньгами, пластиковой карточкой и "
+"электронными деньгами, в любом из отделений банков, кассах, банкоматах, "
+"платежных терминалах, в системе электронных денег, через Интернет-банкинг, М-"
+"банкинг, интернет-эквайринг\n"
+"Для оплаты счета в ЕРИП необходимо: \n"
+"\n"
+"1.​ Выбрать пункт Система \"Расчет” (ЕРИП)\n"
+"2.​ Выбрать последовательно вкладки: Платежи > Интернет-Магазины \n"
+"3.​ Ввести номер заказа {{order_id}}\n"
+"4.​ Проверить корректность информации\n"
+"5.​ Совершить платеж."
+
+#: hg.php:244
+msgid "hutkigrosh_email_notification_title"
+msgstr "Email оповещение"
+
+#: hg.php:245
+msgid "hutkigrosh_email_notification_desk"
+msgstr ""
+"Включить email-оповещение клиентов, при успешном выставлении и оплате счета"
+
+#: hg.php:246
+msgid "hutkigrosh_email_notification_label"
+msgstr "Включить email-оповещение"
+
+#: hg.php:251
+msgid "hutkigrosh_sms_notification_title"
+msgstr "Sms оповещение"
+
+#: hg.php:252
+msgid "hutkigrosh_sms_notification_desk"
+msgstr ""
+"Включить sms-оповещение клиентов, при успешном выставлении и оплате счета"
+
+#: hg.php:253
+msgid "hutkigrosh_sms_notification_label"
+msgstr "Включить sms-оповещение"
+
+#: hg.php:258
+msgid "hutkigrosh_sandbox_title"
+msgstr "Режим \"песочницы\""
+
+#: hg.php:259
+msgid "hutkigrosh_sandbox_desk"
+msgstr ""
+"Данный режим позволяет провести выставление счетов в тестовую систему "
+"ХуткiГрош"
+
+#: hg.php:260
+msgid "hutkigrosh_sandbox_label"
+msgstr "Работа в тестовом режиме (с trial.hgrosh.by)"
+
+#: hutkigrosh_hooks.php:43
+msgid "settings"
+msgstr "Настройки"
+
+#: templates/buttons.php:8
+msgid "webpay_success_text"
+msgstr "Счет успешно оплачен через шлюз WebPay"
+
+#: templates/buttons.php:11
+msgid "webpay_failed_text"
+msgstr "Ошибка оплаты счета через шлюз WebPay"
+
+#: templates/buttons.php:18
+msgid "alfaclick_button_label"
+msgstr "Выставить в Alfa Click"
+
+#: templates/buttons.php:30
+msgid "alfaclick_success_text"
+msgstr "Счет успешно выставлен в АльфаКлик"
+
+#: templates/buttons.php:31
+msgid "alfaclick_failed_text"
+msgstr "Ошибка выставления счета в АльфаКлик"
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce Hutkigrosh Gateway Payments"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/esasby/hgrosh/tree/master/CMS/Plugins/WordPress"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Модуль для выставления счетов в систему ЕРИП черех сервис ХуткiГрош"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "ESAS"
+msgstr ""
