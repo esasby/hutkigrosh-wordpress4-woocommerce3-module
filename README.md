@@ -5,7 +5,7 @@
 
 ### Инструкция по установке и настройке:
 1. Создайте резервную копию вашего магазина и базы данных
-2. Загрузите архив модуля [woocommerce-gateway-hutkigrosh.zip](https://github.com/esasby/hgrosh/tree/master/CMS/Plugins/WordPress/woocommerce-gateway-hutkigrosh/woocommerce-gateway-hutkigrosh.zip) с помощью _Модули_ -> _Установка расширений_
+2. Загрузите архив модуля [woocommerce-gateway-hutkigrosh.zip](https://github.com/esasby/hutkigrosh-wordpress4-woocommerce3-module/blob/master/woocommerce-gateway-hutkigrosh.zip) с помощью _Модули_ -> _Установка расширений_
 3. Через панель администратора Wordpress зайдите в меню __Плагины > Добавить новый__
 4. Нажмите __Загрузить плагин__
 5. Выберите загруженый в п2. архив модуля woocommerce-gateway-hutkigrosh.zip и установите
