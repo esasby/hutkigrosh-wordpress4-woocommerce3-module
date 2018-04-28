@@ -1,13 +1,5 @@
 <?php
 
-use \esas\hutkigrosh\protocol\BillNewRq;
-use \esas\hutkigrosh\protocol\BillProduct;
-use \esas\hutkigrosh\protocol\HutkigroshProtocol;
-use \esas\hutkigrosh\protocol\LoginRq;
-use \esas\hutkigrosh\wrappers\woocommerce\ConfigurationWrapperWoocommerce;
-use \esas\hutkigrosh\wrappers\woocommerce\OrderProductWrapperWoocommerce;
-use \esas\hutkigrosh\wrappers\woocommerce\OrderWrapperWoocommerce;
-
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
@@ -27,7 +19,6 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     const HUTKIGROSH_ORDER_STATUS_ERROR = 'hutkigrosh_order_status_error';
 
     protected static $plugin_options = null;
-    private $cached_paths = array();
 
     protected static $_instance = null;
 
@@ -79,31 +70,10 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
         add_action('woocommerce_api_gateway_hutkigrosh', array($this, 'hutkigrosh_callback'));
         add_filter('woocommerce_thankyou_' . $this->id, array($this, 'pay_buttons'));
         add_filter('woocommerce_thankyou_order_received_text', array($this, 'hutkigrosh_thankyou_text'), 10, 2);
-        spl_autoload_register(array($this, 'autoload'));
 //        add_action('wp_ajax_alfaclick', array($this, 'alfaclick_callback'));
 //        add_action('wp_ajax_nopriv_alfaclick', array($this, 'alfaclick_callback'));
 //        add_action('wp_loaded', array( __CLASS__, 'alfaclick' ), 20 );
     } // End __construct()
-
-    function autoload($cls)
-    {
-        $cls = ltrim($cls, '\\');
-        if (strpos($cls, 'esas') !== 0)
-            return;
-
-        if (isset($this->cached_paths[$cls]) && file_exists($this->cached_paths[$cls])) {
-            include_once $this->cached_paths[$cls];
-            return;
-        }
-
-        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR .
-            str_replace('\\', DIRECTORY_SEPARATOR, $cls) . '.php';
-        if (file_exists($path)) {
-            $this->cached_paths[$cls] = $path;
-            include_once $path;
-            return;
-        }
-    }
 
     public function hutkigrosh_callback()
     {
@@ -302,64 +272,76 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     */
     public function add_bill(WC_Order &$order_sybmol_link)
     {
+        try {
+            $billNewRq = new \ESAS\HootkiGrosh\BillNewRq();
+            $billNewRq->eripId = $this->get_option(self::HUTKIGROSH_STOREID);
+            $billNewRq->invId = $order_sybmol_link->get_order_number();
+            $billNewRq->fullName = $order_sybmol_link->get_shipping_first_name() . ' ' . $order_sybmol_link->get_shipping_last_name();
+            $billNewRq->mobilePhone = $order_sybmol_link->get_billing_phone();
+            $billNewRq->email = $order_sybmol_link->get_billing_email();
+            $billNewRq->fullAddress = $order_sybmol_link->get_shipping_country() . ' ' . $order_sybmol_link->get_shipping_city() . ' ' . $order_sybmol_link->get_shipping_address_1() . ' ' . $order_sybmol_link->get_shipping_address_2();
+            $billNewRq->amount = $order_sybmol_link->get_total();
+            $billNewRq->currency = $order_sybmol_link->get_currency();
+            $billNewRq->notifyByEMail = $this->get_option(self::HUTKIGROSH_EMAIL_NOTIFICATION);
+            $billNewRq->notifyByMobilePhone = $this->get_option(self::HUTKIGROSH_SMS_NOTIFICATION);
+            // добавляем информацию о заказах
+            $line_items = $order_sybmol_link->get_items();
+            if (is_array($line_items)) {
+                foreach ($line_items as $line_item) {
+                    $arItem['invItemId'] = $line_item->get_product_id();
+                    $arItem['desc'] = $line_item->get_name();
+                    $arItem['count'] = $line_item->get_quantity();
+                    $arItem['amt'] = $line_item->get_total();
+                    $arItems[] = $arItem;
+                    unset($arItem);
+                }
+            }
+            $billNewRq->products = $arItems;
 
+
+            $hg = new \ESAS\HootkiGrosh\HootkiGrosh($this->get_option(self::HUTKIGROSH_SANDBOX));
+            $res = $hg->apiLogIn($this->get_option(self::HUTKIGROSH_LOGIN), $this->get_option(self::HUTKIGROSH_PASSWORD));
+
+            // Ошибка авторизации
+            if (!$res) {
+                $error = $hg->getError();
+                $hg->apiLogOut(); // Завершаем сеанс
+                throw new Exception($error);
+            }
+            $billID = $hg->apiBillNew($billNewRq);
+            if (!$billID) {
+                $error = $hg->getError();
+                $hg->apiLogOut(); // Завершаем сеанс
+                throw new Exception($error);
+            }
+            update_post_meta($order_sybmol_link->get_order_number(), BILLID_METADATA_KEY, $billID);
+            return true;
+        } catch (Exception $e) {
+            wc_add_notice($e->getMessage(), 'error');
+            return false;
+        }
     }
 
 
     // Submit payment and handle response
     public function process_payment($order_id)
     {
-        try {
-            $order = wc_get_order($order_id);
-            if (empty($order))
-                throw new Exception('Can not load order[' . $order_id . "]");
-            $orderWrapper = new OrderWrapperWoocommerce($order);
-            $configurationWrapper = new ConfigurationWrapperWoocommerce($this->settings);
-            $hg = new HutkigroshProtocol($configurationWrapper->isSandbox());
-            $resp = $hg->apiLogIn(new LoginRq($configurationWrapper->getHutkigroshLogin(), $configurationWrapper->getHutkigroshPassword()));
-            if ($resp->hasError()) {
-                $hg->apiLogOut();
-                throw new Exception($resp->getResponseMessage(), $resp->getResponseCode());
-            }
-            $billNewRq = new BillNewRq();
-            $billNewRq->setEripId($configurationWrapper->getEripId());
-            $billNewRq->setInvId($orderWrapper->getOrderId());
-            $billNewRq->setFullName($orderWrapper->getFullName());
-            $billNewRq->setMobilePhone($orderWrapper->getMobilePhone());
-            $billNewRq->setEmail($orderWrapper->getEmail());
-            $billNewRq->setFullAddress($orderWrapper->getAddress());
-            $billNewRq->setAmount($orderWrapper->getAmount());
-            $billNewRq->setCurrency($orderWrapper->getCurrency());
-            $billNewRq->setNotifyByEMail($configurationWrapper->isEmailNotification());
-            $billNewRq->setNotifyByMobilePhone($configurationWrapper->isSmsNotification());
-            foreach ($orderWrapper->getProducts() as $lineItem) {
-                $cartProduct = new OrderProductWrapperWoocommerce($lineItem);
-                $product = new BillProduct();
-                $product->setName($cartProduct->getName());
-                $product->setInvId($cartProduct->getInvId());
-                $product->setCount($cartProduct->getCount());
-                $product->setUnitPrice($cartProduct->getUnitPrice());
-                $billNewRq->addProduct($product);
-                unset($product); //??
-            }
+        global $woocommerce;
 
-            $resp = $hg->apiBillNew($billNewRq);
-            $hg->apiLogOut();
-            if ($resp->hasError()) {
-                throw new Exception($resp->getResponseMessage(), $resp->getResponseCode());
-            }
-            update_post_meta($orderWrapper->getOrderId(), BILLID_METADATA_KEY, $resp->getBillId());
-            global $woocommerce;
+        $order = wc_get_order($order_id);
+        //Создаем заказ в системе ЕРИП
+        $hgResp = $this->add_bill($order);
+        if ($hgResp) {
+            // Remove cart
             $woocommerce->cart->empty_cart();
             // Mark as pending
-            $order->update_status($configurationWrapper->getBillStatusPending());
+            $order->update_status('pending', __('order_status_pending', 'woocommerce-hutkigrosh-payments'));
             // Return thankyou redirect
             return array(
                 'result' => 'success',
                 'redirect' => $this->get_return_url($order)
             );
-        } catch (Exception $e) {
-            wc_add_notice($e->getMessage(), 'error');
+        } else {
             return array(
                 'result' => 'error',
                 'redirect' => $this->get_return_url($order)
@@ -367,3 +349,36 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
         }
     }
 }
+
+/*
+	Класс для обработки callback от ЕРИП
+*/
+
+//class WC_ERIP extends WC_HUTKIGROSH_GATEWAY
+//{
+//    public function __construct()
+//    {
+//        add_action('woocommerce_api_' . strtolower(get_class($this)), array(&$this, 'handle_callback'));
+//    }
+//
+//    public function handle_callback()
+//    {
+//        $postData = (string)file_get_contents("php://input");
+//        $post_array = json_decode($postData, false);
+//        $order_id = $post_array->transaction->order_id;
+//        $order_key = $post_array->transaction->tracking_id;
+//        $status = $post_array->transaction->status;
+//        global $woocommerce;
+//        $order = wc_get_order($order_id);
+//        if (!$order || $order->get_order_key() !== $order_key) {
+//            die('ERROR');
+//        }
+//        if ($post_array->transaction->status == 'successful') {
+//            $order->update_status('processing', 'Оплата через ЕРИП произведена');
+//            $response = 'OK Данные успешно получены! Заказ поставлен на выполнение.';
+//        } else {
+//            $response = 'OK Данные успешно получены! Статус заказа не изменён.';
+//        }
+//        die($response);
+//    }
+//}

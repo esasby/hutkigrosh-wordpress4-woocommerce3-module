@@ -64,7 +64,7 @@ class HootkiGrosh
      */
     public function __construct($is_test = false)
     {
-        if ($is_test) {
+        if (strtolower($is_test) == 'on' || strtolower($is_test) == 'yes' || strtolower($is_test) == 'true') {
             $this->base_url = $this->test_api_url;
         } else {
             $this->base_url = $this->api_url;
