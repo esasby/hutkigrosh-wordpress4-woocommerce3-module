@@ -1,14 +1,15 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 /*
-Plugin Name: WooCommerce Hutkigrosh Gateway Payments
-Plugin URI: https://github.com/esasby/hgrosh/tree/master/CMS/Plugins/WordPress
+Plugin Name: WooCommerce Hutkigrosh Gateway
+Plugin URI: https://github.com/esasby/hutkigrosh-wordpress4-woocommerce3-module
 Description: Модуль для выставления счетов в систему ЕРИП черех сервис ХуткiГрош
-Version: 1.0.0
+Version: 2.0.0
 Author: ESAS
-Author Email: nikita.mekh@gmail.com
+Author Email: n.mekh@hutkigrosh.by
 Text Domain: woocommerce-hutkigrosh-payments
 */
 
@@ -22,8 +23,6 @@ function wc_hutkigrosh_gateway_init()
     if (!class_exists('WC_Payment_Gateway')) return;
     // If we made it this far, then include our Gateway Class
     include_once('hg.php');
-    //Подключение модели для работы с API
-    include_once('hutkigrosh_api.php');
     // Now that we have successfully included our class,
     // Lets add it too WooCommerce
     add_filter('woocommerce_payment_gateways', 'hutkigrosh_add_payment_gateway');
@@ -61,5 +60,5 @@ add_action('wp_ajax_alfaclick', 'alfaclick_callback');
 add_action('wp_ajax_nopriv_alfaclick', 'alfaclick_callback');
 function alfaclick_callback()
 {
-    return WC_HUTKIGROSH_GATEWAY::get_instance()->alfaclick_callback(); //TODO все равно каждый раз создается новый объект...
+    return WC_HUTKIGROSH_GATEWAY::get_instance()->alfaclick_callback();
 }
