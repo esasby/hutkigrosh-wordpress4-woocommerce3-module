@@ -55,3 +55,9 @@ http://mydomen.my/wordpress/?wc-api=gateway_hutkigrosh
  * для эмуляции оплаты клиентом выставленного счета воспльзуйтесь личным кабинетом [тестовой системы](https://trial.hgrosh.by) (меню _Тест оплаты ЕРИП_)
 
 _Разработано и протестировано с Wordpress v.4.9.8 и WooCommerce v.3.5.0_
+
+
+### Файлы логов
+Логи модуля доступны по пути:
+
+`<wordpress home>/wp-content/plugins/woo-hutkigrosh-gateway/vendor/esas/hutkigrosh-api-php/logs/hutkigrosh.log`
