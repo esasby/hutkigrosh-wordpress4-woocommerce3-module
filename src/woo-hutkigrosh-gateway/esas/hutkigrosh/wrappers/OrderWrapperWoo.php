@@ -43,7 +43,10 @@ class OrderWrapperWoo extends OrderSafeWrapper
      */
     public function getFullNameUnsafe()
     {
-        return $this->wc_order->get_shipping_first_name() . ' ' . $this->wc_order->get_shipping_last_name();
+        $fullName = trim($this->wc_order->get_billing_first_name() . ' ' . $this->wc_order->get_billing_last_name());
+        if ($fullName == "")
+            $fullName = trim($this->wc_order->get_shipping_first_name() . ' ' . $this->wc_order->get_shipping_last_name());
+        return $fullName;
     }
 
     /**
@@ -75,10 +78,16 @@ class OrderWrapperWoo extends OrderSafeWrapper
      */
     public function getAddressUnsafe()
     {
-        return $this->wc_order->get_shipping_country() . ' '
-            . $this->wc_order->get_shipping_city() . ' '
-            . $this->wc_order->get_shipping_address_1() . ' '
-            . $this->wc_order->get_shipping_address_2();
+        $address = trim($this->wc_order->get_billing_country() . ' '
+            . $this->wc_order->get_billing_city() . ' '
+            . $this->wc_order->get_billing_address_1() . ' '
+            . $this->wc_order->get_billing_address_2());
+        if ($address == "")
+            $address = trim($this->wc_order->get_shipping_country() . ' '
+                . $this->wc_order->get_shipping_city() . ' '
+                . $this->wc_order->get_shipping_address_1() . ' '
+                . $this->wc_order->get_shipping_address_2());
+        return $address;
     }
 
     /**
