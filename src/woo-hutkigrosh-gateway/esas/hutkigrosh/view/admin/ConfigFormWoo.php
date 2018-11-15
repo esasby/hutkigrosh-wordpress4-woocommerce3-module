@@ -86,10 +86,10 @@ class ConfigFormWoo extends ConfigFormArray
     public function generateStatusListField(ConfigFieldStatusList $configField)
     {
         $configField->setOptions($this->orderStatuses);
-        return $this->renderListField($configField);
+        return $this->generateListField($configField);
     }
 
-    public function renderListField(ConfigFieldList $configField)
+    public function generateListField(ConfigFieldList $configField)
     {
         $ret = array(
             'title' => $configField->getName(),
