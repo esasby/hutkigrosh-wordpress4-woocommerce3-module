@@ -31,3 +31,7 @@ After invoicing you clients will be available for payment by a plastic card and 
 
 = 2.2.0 =
 * QR-code generation support
+
+= 2.2.2 =
+* Bug fix: correct eripid validation
+* New feature: instructions section + managed completion text

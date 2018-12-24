@@ -97,7 +97,7 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     public function init_form_fields()
     {
         $this->configForm = new ConfigFormWoo();
-        $this->configForm->addAllExcept([ConfigurationFields::SHOP_NAME, ConfigurationFields::COMPLETION_TEXT]);
+        $this->configForm->addAllExcept([ConfigurationFields::shopName()]);
         $this->configForm->addField(new ConfigFieldCheckbox(
             'enabled',
             __('enable_disable_payments_gateway', 'woocommerce-hutkigrosh-payments'),
@@ -145,10 +145,10 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
             $configurationWrapper = Registry::getRegistry()->getConfigurationWrapper();
             $orderWrapper = new OrderWrapperWoo($order_id);
             $completionPanel = new CompletionPanel($orderWrapper);
-            if ($configurationWrapper->isAlfaclickButtonEnabled()) {
+            if ($configurationWrapper->isAlfaclickSectionEnabled()) {
                 $completionPanel->setAlfaclickUrl(admin_url('admin-ajax.php') . "?action=alfaclick");
             }
-            if ($configurationWrapper->isWebpayButtonEnabled()) {
+            if ($configurationWrapper->isWebpaySectionEnabled()) {
                 $controller = new ControllerWebpayFormSimple($order->get_checkout_order_received_url());
                 $webpayResp = $controller->process($orderWrapper);
                 $completionPanel->setWebpayForm($webpayResp->getHtmlForm());
