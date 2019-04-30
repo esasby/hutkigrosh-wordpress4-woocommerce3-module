@@ -5,6 +5,7 @@ include_once('hutkigrosh_init.php');
 use esas\hutkigrosh\ConfigurationFields;
 use esas\hutkigrosh\controllers\ControllerAddBill;
 use esas\hutkigrosh\controllers\ControllerAlfaclick;
+use esas\hutkigrosh\controllers\ControllerCompletionPage;
 use esas\hutkigrosh\controllers\ControllerNotify;
 use esas\hutkigrosh\controllers\ControllerWebpayFormSimple;
 use esas\hutkigrosh\Registry;
@@ -96,13 +97,7 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     // Build the administration fields for this specific Gateway
     public function init_form_fields()
     {
-        $this->configForm = new ConfigFormWoo();
-        $this->configForm->addAllExcept([ConfigurationFields::shopName()]);
-        $this->configForm->addField(new ConfigFieldCheckbox(
-            'enabled',
-            __('enable_disable_payments_gateway', 'woocommerce-hutkigrosh-payments'),
-            __('enable_disable_payments_gateway_desc', 'woocommerce-hutkigrosh-payments')
-        ));
+        $this->configForm = Registry::getRegistry()->getConfigForm();
         $this->form_fields = $this->configForm->generate();
     }
 
@@ -142,19 +137,10 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     {
         try {
             $order = wc_get_order($order_id);
-            $configurationWrapper = Registry::getRegistry()->getConfigurationWrapper();
-            $orderWrapper = new OrderWrapperWoo($order_id);
-            $completionPanel = new CompletionPanel($orderWrapper);
-            if ($configurationWrapper->isAlfaclickSectionEnabled()) {
-                $completionPanel->setAlfaclickUrl(admin_url('admin-ajax.php') . "?action=alfaclick");
-            }
-            if ($configurationWrapper->isWebpaySectionEnabled()) {
-                $controller = new ControllerWebpayFormSimple($order->get_checkout_order_received_url());
-                $webpayResp = $controller->process($orderWrapper);
-                $completionPanel->setWebpayForm($webpayResp->getHtmlForm());
-                if (array_key_exists('webpay_status', $_REQUEST))
-                    $completionPanel->setWebpayStatus($_REQUEST['webpay_status']);
-            }
+            $controller = new ControllerCompletionPage(
+                admin_url('admin-ajax.php') . "?action=alfaclick",
+                $order->get_checkout_order_received_url());
+            $completionPanel = $controller->process($order_id);
             $completionPanel->getViewStyle()
                 ->setMsgUnsuccessClass("woocommerce-error")
                 ->setMsgSuccessClass("woocommerce-message")

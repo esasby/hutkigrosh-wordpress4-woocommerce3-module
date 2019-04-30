@@ -10,6 +10,8 @@ namespace esas\hutkigrosh;
 
 
 use esas\hutkigrosh\lang\TranslatorWoo;
+use esas\hutkigrosh\view\admin\ConfigFormWoo;
+use esas\hutkigrosh\view\admin\fields\ConfigFieldCheckbox;
 use esas\hutkigrosh\wrappers\ConfigurationWrapperWoo;
 use esas\hutkigrosh\wrappers\OrderWrapperWoo;
 
@@ -28,5 +30,17 @@ class RegistryWoo extends Registry
 
     public function getOrderWrapper($orderNumber) {
         return new OrderWrapperWoo($orderNumber);
+    }
+
+    public function createConfigForm()
+    {
+        $configForm = new ConfigFormWoo();
+        $configForm->addAllExcept([ConfigurationFields::shopName()]);
+        $configForm->addField(new ConfigFieldCheckbox(
+            'enabled',
+            __('enable_disable_payments_gateway', 'woocommerce-hutkigrosh-payments'),
+            __('enable_disable_payments_gateway_desc', 'woocommerce-hutkigrosh-payments')
+        ));
+        return $configForm;
     }
 }

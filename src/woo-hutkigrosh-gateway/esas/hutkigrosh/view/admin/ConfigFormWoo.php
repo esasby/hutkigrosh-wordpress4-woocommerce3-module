@@ -83,12 +83,6 @@ class ConfigFormWoo extends ConfigFormArray
         return $ret;
     }
 
-    public function generateStatusListField(ConfigFieldStatusList $configField)
-    {
-        $configField->setOptions($this->orderStatuses);
-        return $this->generateListField($configField);
-    }
-
     public function generateListField(ConfigFieldList $configField)
     {
         $ret = array(
@@ -101,5 +95,13 @@ class ConfigFormWoo extends ConfigFormArray
 //            $ret['default'] = $configField->getDefault();
 //        }
         return $ret;
+    }
+
+    /**
+     * @return ListOption[]
+     */
+    public function createStatusListOptions()
+    {
+        return $this->orderStatuses;
     }
 }

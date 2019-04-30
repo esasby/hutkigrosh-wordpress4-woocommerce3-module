@@ -35,3 +35,7 @@ After invoicing you clients will be available for payment by a plastic card and 
 = 2.2.2 =
 * Bug fix: correct eripid validation
 * New feature: instructions section + managed completion text
+
+= 2.2.3 =
+* Bug fix: order status update in sandbox mode
+* New feature: external css-file support for completion page
