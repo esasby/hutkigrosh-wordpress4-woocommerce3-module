@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 Plugin Name: WooCommerce Hutkigrosh Gateway
 Plugin URI: https://github.com/esasby/hutkigrosh-wordpress4-woocommerce3-module
 Description: Модуль для выставления счетов в систему ЕРИП через сервис ХуткiГрош
-Version: 2.2.3
+Version: 2.5.0
 Author: ESAS
 Author Email: n.mekh@hutkigrosh.by
 Text Domain: woocommerce-hutkigrosh-payments

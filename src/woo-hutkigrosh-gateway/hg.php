@@ -2,18 +2,12 @@
 
 include_once('hutkigrosh_init.php');
 
-use esas\hutkigrosh\ConfigurationFields;
 use esas\hutkigrosh\controllers\ControllerAddBill;
 use esas\hutkigrosh\controllers\ControllerAlfaclick;
 use esas\hutkigrosh\controllers\ControllerCompletionPage;
 use esas\hutkigrosh\controllers\ControllerNotify;
-use esas\hutkigrosh\controllers\ControllerWebpayFormSimple;
 use esas\hutkigrosh\Registry;
 use esas\hutkigrosh\view\admin\ConfigForm;
-use esas\hutkigrosh\view\admin\ConfigFormWoo;
-use esas\hutkigrosh\view\admin\fields\ConfigFieldCheckbox;
-use esas\hutkigrosh\view\client\CompletionPanel;
-use esas\hutkigrosh\wrappers\OrderWrapperWoo;
 use esas\hutkigrosh\utils\Logger as HgLogger;
 
 if (!defined('ABSPATH')) {
@@ -141,11 +135,6 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
                 admin_url('admin-ajax.php') . "?action=alfaclick",
                 $order->get_checkout_order_received_url());
             $completionPanel = $controller->process($order_id);
-            $completionPanel->getViewStyle()
-                ->setMsgUnsuccessClass("woocommerce-error")
-                ->setMsgSuccessClass("woocommerce-message")
-                ->setWebpayButtonClass("button")
-                ->setAlfaclickButtonClass("button");
             $completionPanel->render();
         } catch (Throwable $e) {
             HgLogger::getLogger("payment")->error("Exception:", $e);

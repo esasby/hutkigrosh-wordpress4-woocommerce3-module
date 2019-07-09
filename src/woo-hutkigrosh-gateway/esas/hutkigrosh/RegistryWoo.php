@@ -10,6 +10,7 @@ namespace esas\hutkigrosh;
 
 
 use esas\hutkigrosh\lang\TranslatorWoo;
+use esas\hutkigrosh\view\client\CompletionPanelWoo;
 use esas\hutkigrosh\view\admin\ConfigFormWoo;
 use esas\hutkigrosh\view\admin\fields\ConfigFieldCheckbox;
 use esas\hutkigrosh\wrappers\ConfigurationWrapperWoo;
@@ -42,5 +43,11 @@ class RegistryWoo extends Registry
             __('enable_disable_payments_gateway_desc', 'woocommerce-hutkigrosh-payments')
         ));
         return $configForm;
+    }
+
+    public function getCompletionPanel($orderWrapper)
+    {
+        $completionPanel = new CompletionPanelWoo($orderWrapper);
+        return $completionPanel;
     }
 }

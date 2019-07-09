@@ -1,0 +1,19 @@
+/*в некоторыех темах для wooo без этого правила съезжают цифры в списке с инструкцией */
+#tab-instructions #instructions-content li:before {
+    content: none;
+}
+
+/*без этого правила вокруг элементов в списке может быть неправильный фон*/
+#tab-instructions #instructions-content ol {
+    display: block;
+}
+
+#tab-instructions #instructions-content li {
+    display: list-item;
+    list-style: decimal;
+}
+
+#tab-webpay #webpay_button {
+    margin: initial;
+    float: initial;
+}
