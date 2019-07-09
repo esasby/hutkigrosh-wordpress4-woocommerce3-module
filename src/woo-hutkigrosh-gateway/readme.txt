@@ -1,9 +1,9 @@
 === WooCommerce Hutkigrosh Gateway ===
 Contributors: nmekh
 Tags: commerce, woocommerce, hutkigrosh, shopping, gateway, erip
-Stable tag: 2.1.1
+Stable tag: 2.5.0
 Requires at least: 4.6
-Tested up to: 4.9
+Tested up to: 5.1
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,3 +39,7 @@ After invoicing you clients will be available for payment by a plastic card and 
 = 2.2.3 =
 * Bug fix: order status update in sandbox mode
 * New feature: external css-file support for completion page
+
+= 2.5.0 =
+* New feature: adaptive theme completion page
+* New feature: auto-expandable section on completion page (if only one section is enabled)
