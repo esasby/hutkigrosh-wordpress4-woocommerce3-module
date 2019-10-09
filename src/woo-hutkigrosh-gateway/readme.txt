@@ -43,3 +43,6 @@ After invoicing you clients will be available for payment by a plastic card and 
 = 2.5.0 =
 * New feature: adaptive theme completion page
 * New feature: auto-expandable section on completion page (if only one section is enabled)
+
+= 2.5.1 =
+* Bug fix: Escaping "&" in product name
