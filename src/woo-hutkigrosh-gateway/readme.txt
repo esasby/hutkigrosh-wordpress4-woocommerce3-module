@@ -1,7 +1,7 @@
 === WooCommerce Hutkigrosh Gateway ===
 Contributors: nmekh
 Tags: commerce, woocommerce, hutkigrosh, shopping, gateway, erip
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 Requires at least: 4.6
 Tested up to: 5.1
 Requires PHP: 5.5
