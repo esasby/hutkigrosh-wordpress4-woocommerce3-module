@@ -46,3 +46,6 @@ After invoicing you clients will be available for payment by a plastic card and 
 
 = 2.5.1 =
 * Bug fix: Escaping "&" in product name
+
+= 2.5.2 =
+* Bug fix: Escaping « » in product name
