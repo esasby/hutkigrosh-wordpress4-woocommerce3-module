@@ -49,3 +49,6 @@ After invoicing you clients will be available for payment by a plastic card and 
 
 = 2.5.2 =
 * Bug fix: Escaping « » in product name
+
+= 2.5.3 =
+* Bug fix: Resolving conflict with "Custom Order Numbers for WooCommerce"
