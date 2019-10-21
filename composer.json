@@ -3,7 +3,7 @@
   "description": "Hutkigrosh woocommerce payment gateway integration",
   "require": {
     "php": ">= 5.6.0",
-    "esas/hutkigrosh-api-php": "v3.0.3"
+    "esas/hutkigrosh-api-php": "v3.0.4"
   },
   "authors": [
     {

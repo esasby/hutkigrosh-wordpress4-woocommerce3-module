@@ -33,8 +33,14 @@ class OrderWrapperWoo extends OrderSafeWrapper
      */
     public function getOrderIdUnsafe()
     {
-        return $this->wc_order->get_order_number();
+        return $this->wc_order->get_id();
     }
+
+    public function getOrderNumber()
+    {
+        return $this->wc_order->get_order_number(); // может отличаться от внутреннего идентификатора, если используются хуки, меняющие номера заказаов
+    }
+
 
     /**
      * Полное имя покупателя
@@ -132,7 +138,7 @@ class OrderWrapperWoo extends OrderSafeWrapper
      */
     public function getBillIdUnsafe()
     {
-        return get_post_meta($this->getOrderId(), self::BILLID_METADATA_KEY, true);
+        return $this->wc_order->get_meta(self::BILLID_METADATA_KEY);
     }
 
     /**
@@ -164,6 +170,7 @@ class OrderWrapperWoo extends OrderSafeWrapper
      */
     public function saveBillId($billId)
     {
-        update_post_meta($this->getOrderId(), self::BILLID_METADATA_KEY, $billId);
+        $this->wc_order->update_meta_data( self::BILLID_METADATA_KEY, $billId);
+        $this->wc_order->save();
     }
 }
