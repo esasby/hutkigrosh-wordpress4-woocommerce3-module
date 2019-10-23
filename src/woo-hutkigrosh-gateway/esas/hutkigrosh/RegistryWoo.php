@@ -29,8 +29,8 @@ class RegistryWoo extends Registry
         return new TranslatorWoo();
     }
 
-    public function getOrderWrapper($orderNumber) {
-        return new OrderWrapperWoo($orderNumber);
+    public function getOrderWrapper($orderId) {
+        return new OrderWrapperWoo($orderId);
     }
 
     public function createConfigForm()

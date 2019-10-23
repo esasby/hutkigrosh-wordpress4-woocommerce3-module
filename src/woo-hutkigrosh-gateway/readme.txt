@@ -52,3 +52,6 @@ After invoicing you clients will be available for payment by a plastic card and 
 
 = 2.5.3 =
 * Bug fix: Resolving conflict with "Custom Order Numbers for WooCommerce"
+
+= 2.5.4 =
+* Bug fix: Order status update callback now working with custom order number

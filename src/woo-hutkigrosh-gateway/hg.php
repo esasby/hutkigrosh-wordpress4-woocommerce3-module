@@ -5,7 +5,7 @@ include_once('hutkigrosh_init.php');
 use esas\hutkigrosh\controllers\ControllerAddBill;
 use esas\hutkigrosh\controllers\ControllerAlfaclick;
 use esas\hutkigrosh\controllers\ControllerCompletionPage;
-use esas\hutkigrosh\controllers\ControllerNotify;
+use esas\hutkigrosh\controllers\ControllerNotifyWoo;
 use esas\hutkigrosh\Registry;
 use esas\hutkigrosh\view\admin\ConfigForm;
 use esas\hutkigrosh\utils\Logger as HgLogger;
@@ -157,7 +157,7 @@ class WC_HUTKIGROSH_GATEWAY extends WC_Payment_Gateway
     {
         try {
             $billId = $_GET['purchaseid'];
-            $controller = new ControllerNotify();
+            $controller = new ControllerNotifyWoo();
             $controller->process($billId);
         } catch (Throwable $e) {
             HgLogger::getLogger("callback")->error("Exception:", $e);
