@@ -11,6 +11,8 @@ Version: 2.5.4
 Author: ESAS
 Author Email: n.mekh@hutkigrosh.by
 Text Domain: woocommerce-hutkigrosh-payments
+WC requires at least: 3.0.0
+WC tested up to: 4.0.1
 */
 
 // Include our Gateway Class and register Payment Gateway with WooCommerce

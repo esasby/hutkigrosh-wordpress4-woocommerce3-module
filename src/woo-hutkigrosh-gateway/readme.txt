@@ -3,7 +3,7 @@ Contributors: nmekh
 Tags: commerce, woocommerce, hutkigrosh, shopping, gateway, erip
 Stable tag: 2.5.3
 Requires at least: 4.6
-Tested up to: 5.1
+Tested up to: 5.3
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
