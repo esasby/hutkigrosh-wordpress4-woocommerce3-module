@@ -2,6 +2,9 @@
 
 Данный модуль обеспечивает взаимодействие между интернет-магазином на базе CMS WordPress с модулем электронной комерции WooCommerce и сервисом платежей [ХуткiГрош](hutkigrosh.by)
 
+### Внимание ### 
+Данная библиотека больше не поддерживается. Вся текущая разработка перенесена в проект [cmsgate-woocommerce-hutkigrosh](https://bitbucket.esas.by/projects/CG/repos/cmsgate-woocommerce-hutkigrosh/browse)
+
 ### Требования ###
 1. PHP 5.6 и выше 
 1. Библиотека Curl 
